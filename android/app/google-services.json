@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "579104989154",
+    "project_id": "flutterfirebase-22160",
+    "storage_bucket": "flutterfirebase-22160.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579104989154:android:537e96d1174087474763bb",
+        "android_client_info": {
+          "package_name": "com.magic8ball.magic_8_ball_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE2Im0K2ExPN-siylZnFO-xD-R7G1ReLM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

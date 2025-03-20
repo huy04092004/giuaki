@@ -1,0 +1,1 @@
+ D:\\downloads\\Magic_8_Ball_app-master\\.dart_tool\\flutter_build\\6814d1f93a844808226f1aa1f5266529\\native_assets.json: 

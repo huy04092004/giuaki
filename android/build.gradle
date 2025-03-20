@@ -1,0 +1,34 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://maven.google.com' }
+        maven { url "https://jitpack.io" }  // Dùng nếu cần thư viện bên thứ ba
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0' // Kiểm tra phiên bản phù hợp với Flutter
+        classpath 'com.google.gms:google-services:4.3.15' // Bắt buộc cho Firebase
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9' // Nếu dùng Crashlytics
+        classpath 'com.google.firebase:perf-plugin:1.4.2' // Nếu dùng Performance Monitoring
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
