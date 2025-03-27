@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.magic8ball.magic_8_ball_app-mergeDebugResources-33:/values-fa/values-fa.xml",
+            "outputFile": "com.magic8ball.magic_8_ball_app-mergeDebugResources-31:/values-fa/values-fa.xml",
             "map": [
                 {
                     "source": "C:\\Users\\ADMIN\\.gradle\\caches\\transforms-3\\08fa285c18f0ebd20c9546d0a71a7811\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-fa\\values-fa.xml",

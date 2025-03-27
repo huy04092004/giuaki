@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.magic8ball.magic_8_ball_app-mergeDebugResources-33:/values-lt/values-lt.xml",
+            "outputFile": "com.magic8ball.magic_8_ball_app-mergeDebugResources-31:/values-lt/values-lt.xml",
             "map": [
                 {
                     "source": "C:\\Users\\ADMIN\\.gradle\\caches\\transforms-3\\74c1895ee15d4a639000e095e1132bc7\\transformed\\core-1.13.1\\res\\values-lt\\values-lt.xml",

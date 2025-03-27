@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.magic8ball.magic_8_ball_app-mergeDebugResources-33:/values-ka/values-ka.xml",
+            "outputFile": "com.magic8ball.magic_8_ball_app-mergeDebugResources-31:/values-ka/values-ka.xml",
             "map": [
                 {
                     "source": "C:\\Users\\ADMIN\\.gradle\\caches\\transforms-3\\7019b76e95ec68a87c3ea591638ea5d5\\transformed\\jetified-play-services-basement-18.4.0\\res\\values-ka\\values.xml",

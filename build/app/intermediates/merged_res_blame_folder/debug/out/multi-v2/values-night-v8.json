@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.magic8ball.magic_8_ball_app-mergeDebugResources-33:/values-night-v8/values-night-v8.xml",
+            "outputFile": "com.magic8ball.magic_8_ball_app-mergeDebugResources-31:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
                     "source": "D:\\downloads\\Magic_8_Ball_app-master\\android\\app\\src\\main\\res\\values-night\\styles.xml",

@@ -13,23 +13,21 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _loaiController = TextEditingController();
   final TextEditingController _giaController = TextEditingController();
-  final TextEditingController _hinhanhController = TextEditingController(); // Nhập URL ảnh
+  final TextEditingController _hinhanhController = TextEditingController();
 
   File? _selectedImage;
   final ImagePicker _picker = ImagePicker();
 
-  /// Chọn ảnh từ thư viện
   Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _selectedImage = File(pickedFile.path);
-        _hinhanhController.clear(); // Xóa URL nếu đã chọn ảnh
+        _hinhanhController.clear();
       });
     }
   }
 
-  /// Upload ảnh lên Firebase Storage và lấy URL
   Future<String?> _uploadImage(File imageFile) async {
     try {
       String fileName = "products/${DateTime.now().millisecondsSinceEpoch}.jpg";
@@ -44,7 +42,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
     }
   }
 
-  /// Thêm sản phẩm vào Firestore
   void _addProduct() async {
     String id = _idController.text.trim();
     String loai = _loaiController.text.trim();
@@ -70,7 +67,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     if (_selectedImage != null) {
       imageUrl = await _uploadImage(_selectedImage!);
     } else if (hinhanh.isNotEmpty) {
-      imageUrl = hinhanh; // Dùng URL nhập vào nếu không chọn ảnh
+      imageUrl = hinhanh;
     }
 
     if (imageUrl == null || imageUrl.isEmpty) {
@@ -105,78 +102,92 @@ class _AddProductScreenState extends State<AddProductScreen> {
       );
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Thêm Sản Phẩm")),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              TextField(
-                controller: _idController,
-                decoration: InputDecoration(labelText: "ID Sản Phẩm"),
-              ),
-              TextField(
-                controller: _loaiController,
-                decoration: InputDecoration(labelText: "Loại Sản Phẩm"),
-              ),
-              TextField(
-                controller: _giaController,
-                decoration: InputDecoration(labelText: "Giá"),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 10),
-
-              // Nút chọn ảnh từ thư viện
-              ElevatedButton(
-                onPressed: _pickImage,
-                child: Text("Chọn ảnh từ thư viện"),
-              ),
-
-              // Hiển thị ảnh đã chọn
-              if (_selectedImage != null)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.file(
-                    _selectedImage!,
-                    height: 150,
-                  ),
+      appBar: AppBar(
+        title: Text("Thêm Sản Phẩm"),
+        backgroundColor: Colors.blueAccent,
+      ),
+      backgroundColor: Colors.transparent, // Đảm bảo không đè lên màu nền của Container
+      body: Container(
+        color: Colors.blue.shade300, // Màu nền cho toàn bộ trang
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Card(
+              elevation: 10,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildTextField(_idController, Icons.confirmation_number, "ID Sản Phẩm"),
+                    _buildTextField(_loaiController, Icons.category, "Loại Sản Phẩm"),
+                    _buildTextField(_giaController, Icons.attach_money, "Giá", isNumber: true),
+                    SizedBox(height: 10),
+                    ElevatedButton.icon(
+                      onPressed: _pickImage,
+                      icon: Icon(Icons.image),
+                      label: Text("Chọn ảnh từ thư viện"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.purpleAccent,
+                        foregroundColor: Colors.white,
+                      ),
+                    ),
+                    if (_selectedImage != null)
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.file(_selectedImage!, height: 150),
+                      ),
+                    _buildTextField(_hinhanhController, Icons.link, "Hoặc nhập URL ảnh"),
+                    if (_hinhanhController.text.isNotEmpty)
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          _hinhanhController.text,
+                          height: 150,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Text("URL ảnh không hợp lệ");
+                          },
+                        ),
+                      ),
+                    SizedBox(height: 20),
+                    Center(
+                      child: ElevatedButton.icon(
+                        onPressed: _addProduct,
+                        icon: Icon(Icons.add_circle),
+                        label: Text("Thêm Sản Phẩm"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          foregroundColor: Colors.white,
+                          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-
-              // Nhập URL ảnh thủ công
-              TextField(
-                controller: _hinhanhController,
-                decoration: InputDecoration(labelText: "Hoặc nhập URL ảnh"),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedImage = null; // Nếu nhập URL thì bỏ ảnh đã chọn
-                  });
-                },
               ),
-
-              // Hiển thị ảnh từ URL
-              if (_hinhanhController.text.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.network(
-                    _hinhanhController.text,
-                    height: 150,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Text("URL ảnh không hợp lệ");
-                    },
-                  ),
-                ),
-
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _addProduct,
-                child: Text("Thêm Sản Phẩm"),
-              ),
-            ],
+            ),
           ),
+        ),
+      ),
+    );
+  }
+
+
+  Widget _buildTextField(TextEditingController controller, IconData icon, String hint, {bool isNumber = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextField(
+        controller: controller,
+        keyboardType: isNumber ? TextInputType.number : TextInputType.text,
+        decoration: InputDecoration(
+          prefixIcon: Icon(icon, color: Colors.blueAccent),
+          labelText: hint,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         ),
       ),
     );
